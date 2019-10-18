@@ -9,7 +9,7 @@ class ModelAbstract
     protected $id;
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId(integer $id)
     {

@@ -23,4 +23,23 @@ class ModelTypeUser extends ModelAbstract
     {
         return $this->name;
     }
+
+    /**
+     * ModelTypeUser constructor.
+     * @param int $type
+     * @throws Exception
+     */
+    public function __construct(integer $type)
+    {
+        $mapper = new MapperTypeUser();
+        $data = $mapper->object($type);
+
+        if (empty($data)) {
+            throw new Exception('Type user not found');
+        }
+
+        $this->setId($data['id'])
+            ->setName($data['name']);
+
+    }
 }

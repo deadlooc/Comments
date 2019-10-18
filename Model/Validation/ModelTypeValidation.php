@@ -23,4 +23,22 @@ class ModelTypeValidation extends ModelAbstract
     {
         return $this->name;
     }
+
+    /**
+     * ModelTypeValidation constructor.
+     * @param int $type
+     * @throws Exception
+     */
+    public function __construct(integer $type)
+    {
+        $mapper = new ModelTypeValidation();
+        $data = $mapper->object($type);
+
+        if (empty($data)){
+            throw new Exception('Type validation not found');
+        }
+
+        $this->setId($data['id'])
+            ->setName($data['name']);
+    }
 }

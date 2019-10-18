@@ -7,12 +7,25 @@ abstract class MapperAbstract extends ControllerDatabase
      * @param array $fields
      * @return string
      */
-    public function prepare(array $fields){
+    public function prepare(array $fields)
+    {
         $result = [];
         foreach ($fields as $key => $value){
             $result[] = $key . ' = ' . $value;
         }
         return implode(', ', $result);
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function object(integer $id)
+    {
+        return $this->db->getQuery(
+            'SELECT * FROM ' .$this->table .
+            ' WHERE id = ' . $id
+        );
     }
 
     /**
@@ -25,8 +38,8 @@ abstract class MapperAbstract extends ControllerDatabase
     }
 
     /**
-     * @param integer $limit
-     * @param integer $offset
+     * @param int $limit
+     * @param int $offset
      *
      * @return array
      */
@@ -52,7 +65,7 @@ abstract class MapperAbstract extends ControllerDatabase
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return array
      */

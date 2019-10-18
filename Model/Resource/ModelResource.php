@@ -45,4 +45,22 @@ class ModelResource extends ModelAbstract
         return $this->name;
     }
 
+    /**
+     * ModelResource constructor.
+     * @param int $resource
+     * @throws Exception
+     */
+    public function __construct(integer $resource)
+    {
+        $mapper = new MapperResource();
+        $data = $mapper->object($resource);
+
+        if (empty($data)) {
+            throw new Exception('Resource not found');
+        }
+
+        $this->setId($data['id'])
+            ->setUser(new ModelUser($data['user']))
+            ->setName($data['name']);
+    }
 }

@@ -29,9 +29,9 @@ class ModelComment extends ModelAbstract
     public $date;
 
     /**
-     * @var string $text
+     * @var string $comment
      */
-    public $text;
+    public $comment;
 
     /**
      * @param ModelResource $resource
@@ -116,16 +116,39 @@ class ModelComment extends ModelAbstract
     /**
      * @param string $text
      */
-    public function setText(string $text): void
+    public function setComment(string $comment): void
     {
-        $this->text = $text;
+        $this->comment = $comment;
     }
 
     /**
      * @return string
      */
-    public function getText()
+    public function getComment()
     {
-        return $this->text;
+        return $this->comment;
+    }
+
+    /**
+     * ModelComment constructor.
+     * @param int $comment
+     * @throws Exception
+     */
+    public function __construct(integer $comment)
+    {
+        $mapper = new MapperComment();
+        $data = $mapper->object($comment);
+
+        if (empty($comment)){
+            throw new Exception('Comment not found');
+        }
+
+        $this->setId($data['id'])
+        ->setResource(new ModelResource($data['resource']))
+        ->setPage(new ModelPage($data['page']))
+        ->setTypeComment(new ModelTypeComment($data['type']))
+        ->setValidate(new ModelTypeValidation($data['validation']))
+        ->setDate(new DateTime($data['date']))
+        ->setComment($data['comment']);
     }
 }

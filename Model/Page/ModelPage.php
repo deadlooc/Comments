@@ -51,4 +51,22 @@ class ModelPage extends ModelAbstract
         return $this->resource->getName() . $this->getName();
     }
 
+    /**
+     * ModelPage constructor.
+     * @param int $page
+     * @throws Exception
+     */
+    public function __construct(integer $page)
+    {
+        $mapper = new MapperResource();
+        $data = $mapper->object($page);
+
+        if(empty($data)) {
+            throw new Exception('Page not found');
+        }
+
+        $this->setId($data['id'])
+            ->setResource(new ModelResource($data['resource']))
+            ->setName($data['name']);
+    }
 }

@@ -23,4 +23,22 @@ class ModelTypeComment extends ModelAbstract
     {
         return $this->name;
     }
+
+    /**
+     * ModelTypeComment constructor.
+     * @param int $type
+     * @throws Exception
+     */
+    public function __construct(integer $type)
+    {
+        $mapper = new MapperTypeComment();
+        $data = $mapper->object($type);
+
+        if(empty($data)){
+            throw new Exception('Type comment not found');
+        }
+
+        $this->setId($data['id'])
+            ->setName($data['name']);
+    }
 }
